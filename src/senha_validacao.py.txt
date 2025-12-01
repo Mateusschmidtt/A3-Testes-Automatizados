@@ -1,0 +1,22 @@
+import re
+
+def validar_senha(senha):
+    criterios = {
+        "maiuscula": bool(re.search(r"[A-Z]", senha)),
+        "minuscula": bool(re.search(r"[a-z]", senha)),
+        "numero": bool(re.search(r"[0-9]", senha)),
+        "especial": bool(re.search(r"[!@#$%&*.,]", senha)),
+        "tamanho": len(senha) >= 8
+    }
+
+    atendidos = sum(criterios.values())
+    valido = atendidos == 5
+
+    if atendidos <= 2:
+        forca = "fraca"
+    elif atendidos < 5:
+        forca = "media"
+    else:
+        forca = "forte"
+
+    return valido, forca

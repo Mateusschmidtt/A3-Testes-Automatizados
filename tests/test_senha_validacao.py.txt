@@ -1,0 +1,32 @@
+from src.senha_validacao import validar_senha
+
+def test_senha_valida():
+    assert validar_senha("Teste@123") == (True, "forte")
+
+def test_sem_maiuscula():
+    assert validar_senha("teste@123")[0] is False
+
+def test_sem_minuscula():
+    assert validar_senha("TESTE@123")[0] is False
+
+def test_sem_numero():
+    assert validar_senha("Teste@abc")[0] is False
+
+def test_sem_especial():
+    assert validar_senha("Teste123")[0] is False
+
+def test_curta():
+    assert validar_senha("T@1a")[0] is False
+
+def test_limite_minimo():
+    assert validar_senha("Aa1@aaaa")[0] is True
+
+def test_muito_longa():
+    senha = "A"*50 + "a1@"
+    assert validar_senha(senha)[0] is True
+
+def test_senha_media():
+    assert validar_senha("Teste123")[1] == "media"
+
+def test_totalmente_invalida():
+    assert validar_senha("")[0] is False
